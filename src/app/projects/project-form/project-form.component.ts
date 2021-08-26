@@ -27,7 +27,10 @@ export class ProjectFormComponent implements OnInit {
         Validators.required,
         Validators.minLength(3),
       ]),
-      description: new FormControl(this.project.description),
+      description: new FormControl(
+        this.project.description,
+        Validators.required
+      ),
       budget: new FormControl(this.project.budget),
       isActive: new FormControl(this.project.isActive),
     });

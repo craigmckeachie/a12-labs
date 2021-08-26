@@ -4,16 +4,7 @@ import {
   AbstractControlDirective,
   FormControl,
 } from '@angular/forms';
-
-const errorMessages: any = {
-  name: {
-    required: 'Name is required.',
-    minlength: 'Name must be at least 3 characters long.',
-  },
-  description: {
-    required: 'Description is required.',
-  },
-};
+import { errorMessages } from './validation-errors';
 
 @Component({
   selector: 'app-validation-errors',
@@ -50,7 +41,9 @@ export class ValidationErrorsComponent implements OnInit {
       if (!this.control?.errors) {
         return;
       }
-      return errorMessages[controlName][key];
+      // return errorMessages[controlName][key];
+      const { getMessage, parameters } = errorMessages[controlName][key];
+      return getMessage(parameters);
     });
   }
 }

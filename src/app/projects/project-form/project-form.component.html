@@ -23,6 +23,10 @@
     placeholder="enter description"
     formControlName="description"
   ></textarea>
+  <app-validation-errors
+    [control]="projectForm.get('description')"
+  ></app-validation-errors>
+
   <label for="budget">Project Budget</label>
 
   <input
