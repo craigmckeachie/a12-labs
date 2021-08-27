@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { errorMessages } from 'src/app/shared/validation-errors/validation-errors';
 import { Project } from '../shared/project.model';
 
 @Component({
@@ -25,7 +26,7 @@ export class ProjectFormComponent implements OnInit {
     this.projectForm = new FormGroup({
       name: new FormControl(this.project.name, [
         Validators.required,
-        Validators.minLength(3),
+        Validators.minLength(errorMessages.name.minlength.parameters.minLength),
       ]),
       description: new FormControl(
         this.project.description,
