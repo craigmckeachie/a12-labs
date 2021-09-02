@@ -1,8 +1,22 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Project } from '../shared/project.model';
 import { ProjectService } from '../shared/project.service';
-import { Subject, Observable, Subscription } from 'rxjs';
-import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
+import { Subject, Observable, Subscription, of } from 'rxjs';
+import {
+  debounceTime,
+  distinctUntilChanged,
+  switchMap,
+  tap,
+} from 'rxjs/operators';
+import { select, Store } from '@ngrx/store';
+import { State } from 'src/app/reducers';
+import {
+  getError,
+  getLoading,
+  getProjects,
+  getSaving,
+} from '../shared/state/project.reducer';
+import { load } from '../shared/state/project.actions';
 
 @Component({
   selector: 'app-projects-container',
@@ -10,13 +24,14 @@ import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
   styleUrls: ['./projects-container.component.css'],
 })
 export class ProjectsContainerComponent implements OnInit, OnDestroy {
-  projects: Project[] = [];
-  errorMessage: string = '';
-  loading: boolean = false;
+  projects$ = this.store.pipe(select(getProjects));
+  errorMessage$ = this.store.pipe(select(getError));
+  loading$ = this.store.pipe(select(getLoading));
+  saving$ = this.store.pipe(select(getSaving));
   private searchTerms = new Subject<string>();
   private subscription!: Subscription;
 
-  constructor(private projectService: ProjectService) {}
+  constructor(private store: Store<State>) {}
 
   ngOnInit() {
     this.observeSearchTerms();
@@ -32,42 +47,33 @@ export class ProjectsContainerComponent implements OnInit, OnDestroy {
       .pipe(
         // wait 300ms after each keystroke before considering the term
         debounceTime(300),
-
         // ignore new term if same as previous term
         distinctUntilChanged(),
-
         // switch to new search observable each time the term changes
-        switchMap((term: string): Observable<Project[]> => {
-          this.loading = true;
-          return this.projectService.listByName(term);
+        tap((term: string) => {
+          // this.store.dispatch(load({ term }));
+          // return of(term);
+          // return this.projects$;
+          this.store.dispatch(load({ name: term }));
         })
       )
-      .subscribe(
-        (data) => {
-          this.loading = false;
-          this.projects = data;
-        },
-        (error) => {
-          this.loading = false;
-          this.errorMessage = error;
-        }
-      );
+      .subscribe();
   }
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    // this.subscription.unsubscribe();
   }
 
   onSaveListItem(event: any) {
     const project: Project = event.item;
-    this.projectService.put(project).subscribe(
-      (updatedProject) => {
-        const index = this.projects.findIndex(
-          (element) => element.id === project.id
-        );
-        this.projects[index] = project;
-      },
-      (error) => (this.errorMessage = error)
-    );
+    // this.projectService.put(project).subscribe(
+    //   (updatedProject) => {
+    //     const index = this.projects.findIndex(
+    //       (element) => element.id === project.id
+    //     );
+    //     this.projects[index] = project;
+    //   },
+    //   (error) => (this.errorMessage = error)
+    // );
   }
 }

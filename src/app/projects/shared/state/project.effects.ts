@@ -18,8 +18,8 @@ export class ProjectEffects {
   load$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(load),
-      switchMap(() => {
-        return this.projectService.list().pipe(
+      switchMap(({ name }) => {
+        return this.projectService.listByName(name).pipe(
           map((data) => loadSuccess({ projects: data })),
           catchError((error) => of(loadFail({ error: error })))
         );
