@@ -5,14 +5,8 @@ import {
   ChangeDetectionStrategy,
 } from '@angular/core';
 import { Project } from '../shared/project.model';
-import { ProjectService } from '../shared/project.service';
-import { Subject, Observable, Subscription, of } from 'rxjs';
-import {
-  debounceTime,
-  distinctUntilChanged,
-  switchMap,
-  tap,
-} from 'rxjs/operators';
+import { Subject, Subscription, of } from 'rxjs';
+import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { select, Store } from '@ngrx/store';
 import { State } from 'src/app/reducers';
 import {
@@ -41,7 +35,7 @@ export class ProjectsContainerComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.observeSearchTerms();
-    this.searchTerms.next('');
+    this.store.dispatch(load({ name: '' }));
   }
 
   onSearch(term: string) {
