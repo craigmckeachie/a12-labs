@@ -1,4 +1,9 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { Project } from '../shared/project.model';
 import { ProjectService } from '../shared/project.service';
 import { Subject, Observable, Subscription, of } from 'rxjs';
@@ -22,6 +27,7 @@ import { load, save } from '../shared/state/project.actions';
   selector: 'app-projects-container',
   templateUrl: './projects-container.component.html',
   styleUrls: ['./projects-container.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProjectsContainerComponent implements OnInit, OnDestroy {
   projects$ = this.store.pipe(select(getProjects));
