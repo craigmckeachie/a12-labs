@@ -50,18 +50,16 @@ export class ProjectsContainerComponent implements OnInit, OnDestroy {
         // ignore new term if same as previous term
         distinctUntilChanged(),
         // switch to new search observable each time the term changes
-        tap((term: string) => {
-          // this.store.dispatch(load({ term }));
-          // return of(term);
-          // return this.projects$;
+        switchMap((term: string) => {
           this.store.dispatch(load({ name: term }));
+          return of(term);
         })
       )
       .subscribe();
   }
 
   ngOnDestroy(): void {
-    // this.subscription.unsubscribe();
+    this.subscription.unsubscribe();
   }
 
   onSaveListItem(event: any) {
