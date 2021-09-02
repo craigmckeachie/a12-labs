@@ -47,8 +47,10 @@ export class ProjectsContainerComponent implements OnInit, OnDestroy {
       .pipe(
         // wait 300ms after each keystroke before considering the term
         debounceTime(300),
+
         // ignore new term if same as previous term
         distinctUntilChanged(),
+
         // switch to new search observable each time the term changes
         switchMap((term: string) => {
           this.store.dispatch(load({ name: term }));
@@ -58,21 +60,12 @@ export class ProjectsContainerComponent implements OnInit, OnDestroy {
       .subscribe();
   }
 
-  ngOnDestroy(): void {
-    this.subscription.unsubscribe();
-  }
-
   onSaveListItem(event: any) {
     const project: Project = event.item;
     this.store.dispatch(save({ project }));
-    // this.projectService.put(project).subscribe(
-    //   (updatedProject) => {
-    //     const index = this.projects.findIndex(
-    //       (element) => element.id === project.id
-    //     );
-    //     this.projects[index] = project;
-    //   },
-    //   (error) => (this.errorMessage = error)
-    // );
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 }
