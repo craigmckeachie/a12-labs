@@ -16,7 +16,7 @@ import {
   getProjects,
   getSaving,
 } from '../shared/state/project.reducer';
-import { load } from '../shared/state/project.actions';
+import { load, save } from '../shared/state/project.actions';
 
 @Component({
   selector: 'app-projects-container',
@@ -64,6 +64,7 @@ export class ProjectsContainerComponent implements OnInit, OnDestroy {
 
   onSaveListItem(event: any) {
     const project: Project = event.item;
+    this.store.dispatch(save({ project }));
     // this.projectService.put(project).subscribe(
     //   (updatedProject) => {
     //     const index = this.projects.findIndex(
