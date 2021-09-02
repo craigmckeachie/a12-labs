@@ -6,14 +6,17 @@ import {
   MetaReducer,
 } from '@ngrx/store';
 import { environment } from '../../environments/environment';
-import { projectReducer, ProjectState } from '../projects/shared/state/project.reducer';
+import {
+  projectReducer,
+  ProjectState,
+} from '../projects/shared/state/project.reducer';
 
 export interface State {
-  projectState: ProjectState
+  // projectState: ProjectState
 }
 
 export const reducers: ActionReducerMap<State> = {
-  projectState: projectReducer
+  // projectState: projectReducer
 };
 
 export const metaReducers: MetaReducer<State>[] = !environment.production
