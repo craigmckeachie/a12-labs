@@ -13,9 +13,14 @@ export class UserService {
     return !!localStorage.getItem('auth_token');
   }
 
+  static get authorizationToken() {
+    return localStorage.getItem('auth_token') || undefined;
+  }
+
   get authenticatedUser() {
-    let token = localStorage.getItem('auth_token') || undefined;
-    let payload = new JwtHelperService().decodeToken(token);
+    let payload = new JwtHelperService().decodeToken(
+      UserService.authorizationToken
+    );
     return payload;
   }
 

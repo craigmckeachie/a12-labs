@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -8,6 +8,7 @@ import { ProjectsModule } from './projects/projects.module';
 import { HomeModule } from './home/home.module';
 import { AccountModule } from './account/account.module';
 import { JwtModule } from '@auth0/angular-jwt';
+import { AuthInterceptor } from './core/auth.interceptor';
 
 export function tokenGetter() {
   return localStorage.getItem('access_token');
@@ -33,7 +34,9 @@ export function tokenGetter() {
     //   },
     // }),
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
