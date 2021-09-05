@@ -1,0 +1,4 @@
+GET     http://localhost:3000/projects/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJjcmFpZ0B0ZXN0LmNvbSIsIm5hbWUiOiJDcmFpZyBGbGF5ZXIiLCJyb2xlcyI6WyJhZG1pbiJdLCJpYXQiOjE2MzA4NjE5OTYsImV4cCI6MTYzMDg2NTU5Nn0.S8vPX6md4VS7y-9G41EZrOcGciA0meeR-8Lkvws4eqg
+
