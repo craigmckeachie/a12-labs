@@ -43,7 +43,10 @@ server.post('/auth/login', (req, res) => {
 });
 
 const findUserByEmail = (email) => {
-  const user = userCredentials.users.find((user) => user.email === email);
+  const userWithPassword = userCredentials.users.find(
+    (user) => user.email === email
+  );
+  const user = { ...userWithPassword };
   delete user.password;
   return user;
 };
