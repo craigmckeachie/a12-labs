@@ -9,7 +9,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
   providedIn: 'root',
 })
 export class UserService {
-  get isLoggedIn() {
+  get isSignedIn() {
     return !!localStorage.getItem('auth_token');
   }
 
@@ -23,9 +23,9 @@ export class UserService {
     private http: HttpClient // private jwtHelper: JwtHelperService
   ) {}
 
-  login(email: string, password: string) {
+  signin(email: string, password: string) {
     return this.http
-      .post(environment.backendUrl + '/auth/login', { email, password })
+      .post(environment.backendUrl + '/auth/signin', { email, password })
       .pipe(
         map((res: any) => {
           if (res.success) {
@@ -42,7 +42,7 @@ export class UserService {
       );
   }
 
-  logout() {
+  signout() {
     localStorage.removeItem('auth_token');
   }
 }

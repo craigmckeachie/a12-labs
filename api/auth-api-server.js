@@ -29,7 +29,7 @@ const isAuth = ({ email, password }) =>
     (user) => user.email === email && user.password === password
   ) !== -1;
 
-server.post('/auth/login', (req, res) => {
+server.post('/auth/signin', (req, res) => {
   const { email, password } = req.body;
   if (isAuth({ email, password }) === false) {
     const status = 401;

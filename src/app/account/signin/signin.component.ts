@@ -28,7 +28,7 @@ export class SigninComponent implements OnInit {
   onSubmit() {
     const formValues = this.signinForm?.value;
     console.log(formValues);
-    this.userService.login(formValues.email, formValues.password).subscribe(
+    this.userService.signin(formValues.email, formValues.password).subscribe(
       (result) => {
         if (result) {
           this.router.navigate(['/projects']);
