@@ -22,7 +22,6 @@ import { ProjectEffects } from './projects/shared/state/project.effects';
     ProjectsModule,
     HttpClientModule,
     HomeModule,
-    StoreModule.forRoot({}, {}),
     StoreDevtoolsModule.instrument({
       maxAge: 25,
       logOnly: environment.production,
