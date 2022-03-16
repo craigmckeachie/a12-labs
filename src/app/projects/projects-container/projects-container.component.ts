@@ -3,6 +3,8 @@ import { Project } from '../shared/project.model';
 import { ProjectService } from '../shared/project.service';
 import { Subject, Observable, Subscription } from 'rxjs';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
+import { HttpClient } from '@angular/common/http';
+import { flush } from '@angular/core/testing';
 
 @Component({
   selector: 'app-projects-container',
@@ -31,7 +33,7 @@ export class ProjectsContainerComponent implements OnInit, OnDestroy {
     this.subscription = this.searchTerms
       .pipe(
         // wait 300ms after each keystroke before considering the term
-        debounceTime(300),
+        debounceTime(500),
 
         // ignore new term if same as previous term
         distinctUntilChanged(),
@@ -71,3 +73,14 @@ export class ProjectsContainerComponent implements OnInit, OnDestroy {
     );
   }
 }
+
+// let service = { listByName: () => {} };
+
+// let projectService = createProjectService();
+
+// function createProjectService() {
+//   flush;
+//   return { listByName };
+// }
+
+// let projectContainerComponent = new ProjectsContainerComponent(projectService);

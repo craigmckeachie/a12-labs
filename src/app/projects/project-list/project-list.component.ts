@@ -9,6 +9,7 @@ import { Project } from '../shared/project.model';
 export class ProjectListComponent implements OnInit {
   @Input()
   projects: Project[] = [];
+  
   editingProject: Project | null = null;
 
   @Output()
